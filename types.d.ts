@@ -1,8 +1,6 @@
 export type AnimeDetails = {
 	title: string;
-	metadata: {
-		[x: string]: string;
-	}[];
+	metadata: Record<string, { name: string; value: string }>;
 	synopsis: string | null;
 	urldata: {
 		type: string | undefined;

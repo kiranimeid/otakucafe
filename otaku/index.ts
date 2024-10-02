@@ -106,7 +106,9 @@ export const getAnimeDetails = async (slug: string | null = null) => {
 		const $ = load(await response.text());
 
 		const title = $('.jdlrx h1').text()?.trim();
-		const metadata = $('.infozingle p')
+		const metadata: Record<string, { name: string; value: string }> = {};
+
+		for (const meta of $('.infozingle p')
 			.map((i, el) => {
 				const metaname = $(el).find('span b').text().trim();
 				const metavalue = $(el)
@@ -115,19 +117,21 @@ export const getAnimeDetails = async (slug: string | null = null) => {
 					.replace(/.*\s?:\s?/gi, '')
 					.trim();
 
-				return { metaname, metavalue };
+				return { name: metaname, value: metavalue };
 			})
-			.toArray()
-			.map((e) => ({ [e.metaname]: e.metavalue }))
-			.flat();
+			.toArray()) {
+			const key = meta.name.toLocaleLowerCase().replace(/\s+/gi, '_');
+			metadata[key] = meta;
+		}
+
 		const synopsis = $('.sinopc').html();
 		const urldata = $('.episodelist')
 			.map((i, el) => {
 				const type = $(el)
 					.find('.monktit')
 					.text()
-					.match(/batch|episode list|lengkap/gi)
-					?.pop();
+					.match(/lengkap|batch|episode list/gi)
+					?.shift();
 				const urls = $(el)
 					.find('ul li')
 					.map((i, li) => {
