@@ -9,13 +9,8 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@cliqz/adblocker-playwright": "^1.33.2",
-    "@prisma/client": "^5.20.0",
     "cheerio": "^1.0.0",
     "elysia": "^1.1.17",
-    "ioredis": "^5.4.1",
-    "node-cron": "^3.0.3",
-    "playwright": "^1.47.2",
-    "prisma": "^5.20.0"
+    "ioredis": "^5.4.1"
   }
 }
